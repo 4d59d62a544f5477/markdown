@@ -1,0 +1,21 @@
+筛选log日志
+ls /home/wwwroot/bi.product.com/Logs/Kinesis/ | grep -E 'login_20210619'| grep -v 'zip'  | xargs cat | grep -E '"time":1624080787' | wc -l
+
+
+
+bq 查询数量
+ bq query --use_legacy_sql=false  "SELECT event_ts,count(1) FROM triwin-gcp-313003.triwin_source.user_event_history WHERE event_date = '2021-06-19' and event_ts>'1624079234' and event_name='login' group by event_ts order by count(1) desc"
+
+
+
+
+select
+  uid,
+  tag_name,
+  tag_value,
+  tag_type,
+  expire_ts,
+  appid
+from triwin_dm.user_tags 
+where tag_name = 'Total_Interstitial_AdView_Revenue' and tag_value in ('0.050050000000000004' '0.0')
+and expire_ts > 1624431438;
